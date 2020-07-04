@@ -15,6 +15,9 @@ let teamLog=[]
 //switchH checks to see if there is a Mnagaer to the team
 let switcH=0;
 
+let idOfManager=1;
+let idOfEmployee=2;
+
 //choice 1) options (manager, engineer, intern,complete team)
 const option1= ()=>{
   inquirer
@@ -60,34 +63,25 @@ const manager= ()=>{
         {
           name: 'nameMana',
           message: `What is the team's manger Name?`,
-          default: 'Manager',
+          default: 'The Name',
+          validate: checkName
         },
         {
           name: 'email',
           message: `What is the team's manger Email?`,
           default: 'noemail@gmail.com',
+          validate: checkEmail,
+
         },
         {
             name: 'officeNumber',
             message: `What is your office/room number`,
-            default: 'Manager',
+            default: '02',
           },
-          {
-            name: 'id',
-            message: `enter this employee ID`,
-            default: '0',
-          },
+    
       ])
       .then(answers => {
-       const managerS =new Manager(answers.nameMana,answers.id,answers.email,'Manager',answers.officeNumber)
-    //    let manageR={
-    //      name:managerS.name,
-    //      id:managerS.id,
-    //      email: managerS.email,
-    //      role:managerS.role,
-    //      office:managerS.officNumber
-
-    //    }
+       const managerS =new Manager(answers.nameMana,idOfManager,answers.email,'Manager',answers.officeNumber)
        teamLog.push(managerS);
        switcH++ 
        return managerS;
@@ -105,35 +99,27 @@ const engineer= ()=>{
         {
           name: 'nameEng',
           message: `What is this engineer's Name?`,
-          default: 'Manager',
+          default: 'The Name',
+          validate: checkName
         },
         {
           name: 'email',
           message: `What is this engineer's Email?`,
           default: 'noemail@gmail.com',
+          validate: checkEmail,
         },
           {
             name: 'github',
             message: `What is this engineer gitHub username`,
-            default: 'username',
+            default: 'The Name',
           },
-          {
-            name: 'id',
-            message: `enter this employee ID`,
-            default: '0',
-          },
+       
       ])
       .then(answers => {
-       const engineerS =new Engineer(answers.nameEng,answers.id,answers.email,'Engineer',answers.github)
-    //    let engineeR={
-    //     name:engineerS.name,
-    //     id:engineerS.id,
-    //     email: engineerS.email,
-    //     role:engineerS.role,
-    //     github:engineerS.github
-    //   }
+       const engineerS =new Engineer(answers.nameEng,idOfEmployee,answers.email,'Engineer',`https://github.com/${answers.github}`)
        teamLog.push(engineerS);
       //  console.log(teamLog);
+      idOfEmployee++
        return engineerS
       
       })
@@ -150,34 +136,25 @@ const intern= ()=>{
         {
           name: 'nameInt',
           message: `What is this intern's Name?`,
-          default: 'Manager',
+          default: 'The Name',
+          validate: checkName
         },
         {
           name: 'email',
           message: `What is this intern's Email?`,
           default: 'noemail@gmail.com',
+          validate: checkEmail,
         },
           {
             name: 'school',
             message: `What University does this intern attends?`,
             default: 'N/A',
           },
-          {
-            name: 'id',
-            message: `enter this employee ID`,
-            default: '0',
-          },
       ])
       .then(answers => {
-       const internS =new Intern(answers.nameInt,answers.id,answers.email,'Intern',answers.school)
-    //    let interN={
-    //     name:internS.name,
-    //     id:internS.id,
-    //     email: internS.email,
-    //     role:internS.role,
-    //     school:internS.school
-    //   }
+       const internS =new Intern(answers.nameInt,idOfEmployee,answers.email,'Intern',answers.school)
       teamLog.push(internS);
+      idOfEmployee++
       return internS
       })
       .then(()=>{
@@ -202,11 +179,39 @@ const complete= ()=>{
 }
 
 
+// input validations
+const checkEmail= (email)=> {
+  
+    let valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+
+    if (valid) {
+      console.log("emaill accepted");
+        return true;
+    } else {
+        console.log(".  Please enter a valid email")
+        return false;
+    }
+}
+
+const checkName= (name)=>{ 
+let letters = /^[a-zA-Z]+ [a-zA-Z]+$/.test(name);
+if(letters)
+{
+console.log('Validated');
+return true;
+}
+else
+{
+console.log(`  Please input alphabet characters only`);
+return false;
+}
+}
+
 
 
 
 async function asyncF(){
-option1()
+let runIt= await option1()
 
 }
 
