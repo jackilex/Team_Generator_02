@@ -12,6 +12,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 let teamLog=[]
+//switchH checks to see if there is a Mnagaer to the team
 let switcH=0;
 
 //choice 1) options (manager, engineer, intern,complete team)
@@ -21,7 +22,7 @@ const option1= ()=>{
     {
       type: 'list',
       name: 'option1',
-      message: `Add the following to the team`,
+      message: `Create a Team and Add the following to the team (must have at least one manager and someone under the manager)`,
       choices: ['Add manager','Add engineer','Add intern','*complete*'],
     },
     ])
@@ -87,7 +88,6 @@ const manager= ()=>{
     //      office:managerS.officNumber
 
     //    }
-       
        teamLog.push(managerS);
        switcH++ 
        return managerS;
